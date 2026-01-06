@@ -33,18 +33,36 @@ class ApiClient {
       headers['Authorization'] = `Bearer ${this.token}`;
     }
 
-    const response = await fetch(`${this.baseUrl}${endpoint}`, {
-      ...options,
-      headers,
-    });
+    // 添加超时控制（Render 冷启动可能需要 60 秒）
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 90000); // 90 秒超时
 
-    const data = await response.json();
+    try {
+      const response = await fetch(`${this.baseUrl}${endpoint}`, {
+        ...options,
+        headers,
+        signal: controller.signal,
+      });
 
-    if (!response.ok) {
-      throw new Error(data.error || '请求失败');
+      clearTimeout(timeoutId);
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || '请求失败');
+      }
+
+      return data;
+    } catch (error: any) {
+      clearTimeout(timeoutId);
+
+      // 如果是超时错误，给出更友好的提示
+      if (error.name === 'AbortError') {
+        throw new Error('请求超时，服务器可能正在启动中，请稍后重试');
+      }
+
+      throw error;
     }
-
-    return data;
   }
 
   async get<T>(endpoint: string): Promise<T> {
