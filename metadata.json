@@ -1,0 +1,7 @@
+{
+  "name": "ReciteAI - Smart Memorization Coach",
+  "description": "An intelligent tool to help you memorize texts by breaking them into semantic chunks and providing AI-powered pronunciation and accuracy feedback on your recitation.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
