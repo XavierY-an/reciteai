@@ -4,6 +4,7 @@ import {
   updateProgress,
   submitRecitation,
   getStudyHistory
+  lookupWord
 } from '../controllers/studyController.js';
 import { auth } from '../middleware/auth.js';
 
@@ -16,6 +17,8 @@ router.use(auth);
 router.get('/history', getStudyHistory);
 router.get('/:articleId', getOrCreateStudyRecord);
 router.put('/:articleId/progress', updateProgress);
+n// 单词查询（不需要articleId）
+router.post('/lookup-word', lookupWord);
 router.post('/:articleId/recite', submitRecitation);
 
 export default router;

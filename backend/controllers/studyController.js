@@ -135,3 +135,28 @@ export const getStudyHistory = async (req, res) => {
     res.status(500).json({ error: '获取失败' });
   }
 };
+
+// 查询单词定义
+export const lookupWord = async (req, res) => {
+  try {
+    const { word, context } = req.body;
+
+    if (!word) {
+      return res.status(400).json({ error: '请提供要查询的单词' });
+    }
+
+    if (!context) {
+      return res.status(400).json({ error: '请提供上下文句子' });
+    }
+
+    // 调用智谱AI查询单词
+    const definition = await zhipuService.lookupWord(word, context);
+
+    res.json({
+      definition
+    });
+  } catch (error) {
+    console.error('单词查询错误:', error);
+    res.status(500).json({ error: '单词查询失败' });
+  }
+};

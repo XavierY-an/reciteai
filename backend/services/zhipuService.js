@@ -269,6 +269,57 @@ ${segmentStrategy}
         detailedAnalysis: []
       };
     }
+  // 查询单词定义
+  async lookupWord(word, contextSentence) {
+    const messages = [
+      {
+        role: 'system',
+        content: `你是一个英语词典助手。请提供单词在上下文中的定义。`
+      },
+      {
+        role: 'user',
+        content: `请提供单词 "${word}" 在以下语境中的定义：${contextSentence}
+
+要求：
+1. 提供IPA音标
+2. 标注词性
+3. 提供准确的中文定义
+
+请以JSON格式返回，格式如下：
+{
+  "word": "${word}",
+  "ipa": "音标",
+  "partOfSpeech": "词性",
+  "definition": "中文定义"
+}`
+      }
+    ];
+
+    try {
+      const response = await this.chat(messages, { temperature: 0.3, maxTokens: 500 });
+
+      let content = response.choices[0].message.content;
+      content = content.replace(/```json
+?/g, '').replace(/```
+?/g, '').trim();
+
+      try {
+        return JSON.parse(content);
+      } catch (error) {
+        console.error('JSON 解析失败:', content);
+        return {
+          word: word,
+          ipa: '/unknown/',
+          partOfSpeech: 'unknown',
+          definition: '无法查询该单词定义'
+        };
+      }
+    } catch (error) {
+      console.error('单词查询失败:', error);
+      throw new Error('单词查询失败');
+    }
+  }
+
   }
 }
 
