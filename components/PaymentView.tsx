@@ -67,7 +67,7 @@ export const PaymentView: React.FC<PaymentViewProps> = ({ onBack, onUpgrade }) =
             </li>
             <li className="flex items-center gap-3 text-slate-400 line-through decoration-slate-300">
               <X size={18} />
-              <span>Gemini 2.5 高级语音</span>
+              <span>智谱AI GLM-4 高级语音</span>
             </li>
           </ul>
 
@@ -104,7 +104,7 @@ export const PaymentView: React.FC<PaymentViewProps> = ({ onBack, onUpgrade }) =
                 </li>
                 <li className="flex items-center gap-3 text-slate-800 font-medium">
                 <div className="bg-rose-100 p-1 rounded-full"><Sparkles size={14} className="text-rose-600 fill-current" /></div>
-                <span>Gemini 2.5 拟人化全朗读</span>
+                <span>智谱AI GLM-4 拟人化全朗读</span>
                 </li>
                 <li className="flex items-center gap-3 text-slate-800 font-medium">
                 <div className="bg-rose-100 p-1 rounded-full"><Check size={14} className="text-rose-600" /></div>

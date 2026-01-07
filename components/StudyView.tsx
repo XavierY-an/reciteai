@@ -567,7 +567,7 @@ export const StudyView: React.FC<StudyViewProps> = ({ sections: initialSections,
                       {isLoadingDefinition && activeDefinition.definition === '查询中...' ? (
                            <div className="flex items-center gap-2 text-rose-300">
                                <Loader2 className="animate-spin" size={16} />
-                               <span>正在查询 Gemini...</span>
+                               <span>正在查询智谱AI...</span>
                            </div>
                       ) : (
                           <>
